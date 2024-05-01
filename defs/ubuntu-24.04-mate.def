@@ -1,0 +1,145 @@
+Bootstrap: docker
+From: ubuntu:noble
+Include: apt
+
+%post
+# Avoids errors from debconf later in build
+export DEBIAN_FRONTEND=noninteractive
+apt-get update -y
+apt-get upgrade -y
+
+apt-get install -y \
+	curl \
+	wget \
+
+apt-get install -y hostname
+
+apt-get install -y \
+	build-essential \
+	nmap \
+	ncat \
+	tcl \
+	xterm \
+	websockify \
+	vim-nox \
+	libsystemd-dev \
+	libsystemd0 \
+	mesa-utils \
+	mate-desktop \
+	mate-desktop-environment \
+	mate-user-guide \
+	atril \
+	mate-terminal \
+	mate-calc \
+	firefox \
+	caja \
+	caja-actions \
+	caja-actions-common \
+	caja-actions-dev \
+	caja-admin \
+	caja-common \
+	caja-eiciel \
+	caja-extensions-common \
+	caja-gtkhash \
+	caja-image-converter \
+	caja-mediainfo \
+	caja-open-terminal \
+	caja-rename \
+	caja-seahorse \
+	caja-sendto \
+	caja-share \
+	caja-wallpaper \
+	caja-xattr-tags \
+	deja-dup-caja \
+	folder-color-caja \
+	caja-owncloud \
+	gir1.2-caja-2.0 \
+	libcaja-extension-dev \
+	libcaja-extension-doc \
+	libcaja-extension1 \
+	mate-control-center \
+	mate-desktop-environment-core \
+	mate-icon-theme \
+	python-caja-common \
+	python3-caja \
+	binutils-doc \
+	bzip2-doc \
+	cpp-doc \
+	gcc-12-locales \
+	cpp-12-doc \
+	autoconf \
+	automake \
+	libtool \
+	flex \
+	bison \
+	gdb \
+	gcc-doc \
+	glibc-doc \
+	colord \
+	cups-common \
+	git \
+	bzr \
+	make-doc \
+	apparmor \
+	less \
+	diffutils-doc \
+	perl-doc \
+	python3-doc \
+	python3-tk \
+	python3-venv \
+	python-dbus-doc \
+	gfortran \
+	python3-dev \
+	python3-pytest \
+	python3-setuptools \
+	python3.12-venv \
+	python3.12-doc \
+	binfmt-support \
+	readline-doc \
+	ri \
+	ruby-dev \
+	bundler \
+	libxml2-utils \
+	vim-doc \
+	debhelper \
+	xfonts-cyrillic \
+	dconf-service \
+	dconf-cli \
+	dconf-gsettings-backend \
+
+# This was in the Ubuntu-K version but seems to be missing in the Ubuntu-N
+	# python-numpy-doc \
+
+
+# Versions here are current latest
+curl -sLO https://github.com/TurboVNC/turbovnc/releases/download/3.1.1/turbovnc_3.1.1_amd64.deb
+curl -sLO https://github.com/VirtualGL/virtualgl/releases/download/3.1.1/virtualgl_3.1.1_amd64.deb
+
+apt-get install -y \
+	./turbovnc_3.1.1_amd64.deb \
+	./virtualgl_3.1.1_amd64.deb \
+
+rm \
+	./turbovnc_3.1.1_amd64.deb \
+	./virtualgl_3.1.1_amd64.deb \
+
+# Generate locales to avoid errors
+# We can add more here if language support is desired
+# and we need at least one
+# but they take a while to generate
+apt-get install -y locales
+locale-gen \
+	en_GB.UTF-8 \
+
+update-locale	
+
+# Ubuntu wants to run Firefox as a Snap package, and I don't think that's going to work well here.
+# So we download the latest release and symlink it in place of the snap shim script.
+# Unfortunately Firefox's update cycle is so fast that this is almost always going to be out of date.
+# At least we can automatically get the newest version
+curl -sLo firefox-latest.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux&lang=en-GB"
+tar -C /opt -xf firefox-latest.tar.bz2
+ln -sf /opt/firefox/firefox /usr/bin/firefox
+
+# Remove cache to reduce image size
+apt-get clean
