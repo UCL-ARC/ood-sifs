@@ -137,7 +137,7 @@ update-locale
 # So we download the latest release and symlink it in place of the snap shim script.
 # Unfortunately Firefox's update cycle is so fast that this is almost always going to be out of date.
 # At least we can automatically get the newest version
-curl -sLo firefox-latest.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux&lang=en-GB"
+curl -sLo firefox-latest.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-GB"
 tar -C /opt -xf firefox-latest.tar.bz2
 ln -sf /opt/firefox/firefox /usr/bin/firefox
 
