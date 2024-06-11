@@ -142,5 +142,23 @@ curl -sLo firefox-latest.tar.bz2 "https://download.mozilla.org/?product=firefox-
 tar -C /opt -xf firefox-latest.tar.bz2
 ln -sf /opt/firefox/firefox /usr/bin/firefox
 
+# Creates Firefox applications menu entry
+cat <<EOF >/usr/share/applications/firefox.desktop
+[Desktop Entry]
+Version=1.0
+Name=Firefox Web Browser
+Comment=Browse the World Wide Web
+Exec=/opt/firefox/firefox %u
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=/opt/firefox/icons/mozicon128.png
+Categories=Application;Internet;Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/vnd.mozilla.xul+xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;
+StartupWMClass=Firefox
+StartupNotify=true
+EOF
+
+
 # Remove cache to reduce image size
 apt-get clean
