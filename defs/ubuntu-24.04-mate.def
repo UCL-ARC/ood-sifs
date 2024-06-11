@@ -106,6 +106,7 @@ apt-get install -y \
 	dconf-service \
 	dconf-cli \
 	dconf-gsettings-backend \
+	xdg-utils \
 
 # This was in the Ubuntu-K version but seems to be missing in the Ubuntu-N
 	# python-numpy-doc \
