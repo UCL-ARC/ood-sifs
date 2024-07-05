@@ -20,5 +20,5 @@ $(LOGDIR):
 	mkdir $(LOGDIR)
 
 $(BUILDDIR)/%.sif : defs/%.def $(BUILDDIR) $(LOGDIR)
-	apptainer build $@ $< 2>&1 | tee $(addprefix $(LOGDIR)/,$(notdir $@)).`date +\%Y%m%d`.log
+	apptainer build --force $@ $< 2>&1 | tee $(addprefix $(LOGDIR)/,$(notdir $@)).`date +\%Y%m%d`.log
 .PHONY: all
