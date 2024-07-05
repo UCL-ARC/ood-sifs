@@ -111,6 +111,46 @@ apt-get install -y \
 # This was in the Ubuntu-K version but seems to be missing in the Ubuntu-N
 	# python-numpy-doc \
 
+# A collection of X libs and Mesa stuff required for certain apps with 3D
+# Most of it is already installed as deps by previous step
+apt-get install -y \
+        libdrm2 \
+        libfontconfig1 \
+        libfreetype6 \
+        libglapi-mesa \
+        libglu1-mesa \
+        libice6 \
+        libpng16-16 \
+        libsm6 \
+        libx11-6 \
+        libx11-xcb1 \
+        libxau6 \
+        libxcb-glx0 \
+        libxcb-icccm4 \
+        libxcb-image0 \
+        libxcb-keysyms1 \
+        libxcb-randr0 \
+        libxcb-render-util0 \
+        libxcb-render0 \
+        libxcb-shape0 \
+        libxcb-shm0 \
+        libxcb-sync1 \
+        libxcb-util1 \
+        libxcb-xfixes0 \
+        libxcb-xinput0 \
+        libxcb-xkb1 \
+        libxcb1 \
+        libxdmcp6 \
+        libxext6 \
+        libxft2 \
+        libxi6 \
+        libxkbcommon-x11-0 \
+        libxkbcommon0 \
+        libxrender1 \
+        libxss1 \
+        libxt6 \
+        mesa-utils \
+
 
 # Versions here are current latest
 curl -sLO https://github.com/TurboVNC/turbovnc/releases/download/3.1.1/turbovnc_3.1.1_amd64.deb
@@ -159,6 +199,8 @@ StartupWMClass=Firefox
 StartupNotify=true
 EOF
 
-
 # Remove cache to reduce image size
 apt-get clean
+
+# Write a list of installed packages and versions out
+dpkg-query -W >/etc/packages.list
