@@ -19,6 +19,9 @@ $(BUILDDIR):
 $(LOGDIR):
 	mkdir $(LOGDIR)
 
-$(BUILDDIR)/%.sif : defs/%.def $(BUILDDIR) $(LOGDIR)
-	apptainer build --force $@ $< 2>&1 | tee $(addprefix $(LOGDIR)/,$(notdir $@)).`date +\%Y%m%d`.log
+apptainer:
+	ln -sfT `which apptainer` ./apptainer || ln -sfT `which singularity` ./apptainer
+
+$(BUILDDIR)/%.sif : defs/%.def $(BUILDDIR) $(LOGDIR) apptainer
+	./apptainer build --force $@ $< 2>&1 | tee $(addprefix $(LOGDIR)/,$(notdir $@)).`date +\%Y%m%d`.log
 .PHONY: all
