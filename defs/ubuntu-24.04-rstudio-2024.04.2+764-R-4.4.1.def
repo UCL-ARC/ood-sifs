@@ -50,6 +50,7 @@ apt-get install -y \
 	bzr \
 	less \
 	libxml2-utils \
+	libxml2-dev \
 	debhelper \
 	zlib1g zlib1g-dev \
 
