@@ -105,7 +105,8 @@ curl -sL https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee 
 # add the R 4.0 repo from CRAN -- adjusts 'focal' to 'groovy' or 'bionic' etc as needed
 add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"
 
-apt-get install -y --no-install-recommends r-base
+apt-get install -y --no-install-recommends r-base=4.4.1-3.2404.0 r-recommended=4.4.1-3.2404.0 r-base-core=4.4.1-3.2404.0
+R --version
 
 # Install the tool for installing deb files with dependency resolution
 apt-get install -y --no-install-recommends gdebi-core
