@@ -50,7 +50,6 @@ apt-get install -y \
 	bzr \
 	less \
 	libxml2-utils \
-	libxml2-dev \
 	debhelper \
 	zlib1g zlib1g-dev \
 
@@ -82,6 +81,17 @@ apt-get install -y \
 	nmap \
 	ncat \
 
+# Additional requests, dependencies for packages people wanted
+apt-get install -y \
+        libfontconfig1-dev \
+        libfreetype6-dev \
+        libpng-dev \
+        pango1.0 \
+        libcairo-dev \
+        pandoc \
+        libxml2-dev \
+        libcurl4-gnutls-dev \
+        libopenblas-pthread-dev \
 
 # Generate locales to avoid errors
 # We can add more here if language support is desired
@@ -126,8 +136,11 @@ directory='~/.rstudio/db.sqlite'
 	>>/etc/rstudio/database.conf
 
 
-
 rm rstudio-server-2024.04.2-764-amd64.deb
+
+# Someone needed this as a dependency and for WHATEVER reason, the compiled parts
+#  were failing to build as a user-space package.
+Rscript -e "install.packages('fs', repos=c(CRA='https://cloud.r-project.org'))"
 
 # Remove cache to reduce image size
 apt-get clean
